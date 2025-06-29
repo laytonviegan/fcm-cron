@@ -32,3 +32,10 @@ jobs:
         PROJECT_ID: ${{ secrets.GCP_PROJECT }}
       run: |
         bash ./firebase_push.sh
+        
+    - name: Run push script
+      env:
+        PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+        RTDB_URL:  ${{ secrets.RTDB_URL }}     # ← new line
+      run: |
+        bash ./firebase_push.sh
