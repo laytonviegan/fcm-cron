@@ -3,6 +3,8 @@ name: Weather-Notify
 on:
   schedule:
     - cron: '*/5 * * * *'
+  repository_dispatch:
+    types: [cron] 
   workflow_dispatch:
 
 permissions:
