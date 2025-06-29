@@ -18,10 +18,13 @@ hum=$(jq  -r '.hum  // empty'         <<<"$env_json")
 updated=$(jq -r '.updatedAt // 0'     <<<"$env_json")
 notified=$(jq -r '.lastNotifiedAt // 0'<<<"$env_json")
 
-[[ -z $temp || -z $hum || $updated -le $notified ]] && {
-  echo "No fresh reading – exiting."
-  exit 0
-}
+# --------------------------------------------------------------------------
+# Guard-clause that normally skips duplicates
+# [[ -z $temp || -z $hum || $updated -le $notified ]] && {
+#   echo "No fresh reading – exiting."
+#   exit 0
+# }
+# --------------------------------------------------------------------------
 
 # ── 2. Build & send FCM message ---------------------------------------------
 json=$(jq -n --arg t "$temp" --arg h "$hum" '
