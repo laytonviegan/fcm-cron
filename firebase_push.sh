@@ -29,10 +29,10 @@ updated=$(jq -r '.updatedAt     // 0'         <<<"$env_json")
 notified=$(jq -r '.lastNotifiedAt // 0'       <<<"$env_json")
 
 # ---------------------------------------------------------------------------
-if $SKIP_DUPLICATE && [[ -z $temp || -z $hum || $updated -le $notified ]]; then
-  echo "No fresh reading – exiting."
-  exit 0
-fi
+#if $SKIP_DUPLICATE && [[ -z $temp || -z $hum || $updated -le $notified ]]; then
+#  echo "No fresh reading – exiting."
+#  exit 0
+#fi
 # ---------------------------------------------------------------------------
 
 ###############################################################################
