@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
+echo "DEBUG  PROJECT_ID='${PROJECT_ID:-<empty>}'"
 PROJECT_ID="${PROJECT_ID}"
 DB_NODE="/latest/env"                   # one-row “current reading”
 DB_URL="https://${PROJECT_ID}.firebasedatabase.app${DB_NODE}.json"
