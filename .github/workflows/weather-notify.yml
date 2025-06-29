@@ -2,19 +2,19 @@ name: Weather-Notify
 
 on:
   schedule:
-    # every 5 minutes (GitHub uses UTC) :contentReference[oaicite:4]{index=4}
-    - cron: '*/5 * * * *'
-  workflow_dispatch:         # allow manual runs too
+    - cron: '*/5 * * * *'     # every 5 minutes (UTC)
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   push-weather:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout (no code needed, but keeps Actions happy)
+      - name: Checkout (code not strictly needed, but common practice)
         uses: actions/checkout@v4
 
       - name: Set up Node
@@ -23,10 +23,9 @@ jobs:
           node-version: 20
 
       - name: Install deps
-        run: |
-          npm install firebase-admin@^12.0.0
+        run: npm ci
 
-      - name: Send weather push
+      - name: Run sendAlert.js
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           DATABASE_URL:             ${{ secrets.DATABASE_URL }}
