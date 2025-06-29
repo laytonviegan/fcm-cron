@@ -2,7 +2,7 @@ name: Weather-Notify
 
 on:
   schedule:
-    - cron: '*/5 * * * *'     # every 5 minutes (UTC)
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -14,16 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout (code not strictly needed, but common practice)
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Install deps
-        run: npm ci
+        run: npm install --omit=dev --no-audit --no-fund
 
       - name: Run sendAlert.js
         env:
