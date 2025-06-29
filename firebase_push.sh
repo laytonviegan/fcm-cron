@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
-echo "DEBUG  PROJECT_ID='${PROJECT_ID:-<empty>}'"
-PROJECT_ID="${PROJECT_ID}"
-DB_NODE="/latest/env"                   # one-row “current reading”
-DB_URL="https://${PROJECT_ID}.firebasedatabase.app${DB_NODE}.json"
+
+echo "DEBUG PROJECT_ID='${PROJECT_ID:-<empty>}'"
+echo "DEBUG RTDB_URL ='${RTDB_URL:-<empty>}'"
+
+DB_NODE="/latest/env"
+DB_URL="${RTDB_URL}${DB_NODE}.json"               # ← use the secret here
 FCM_URL="https://fcm.googleapis.com/v1/projects/${PROJECT_ID}/messages:send"
+
 
 TOKEN=$(gcloud auth application-default print-access-token)
 
