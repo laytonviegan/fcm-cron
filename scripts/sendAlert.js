@@ -1,12 +1,13 @@
 // scripts/sendAlert.js
 import { initializeApp, cert } from 'firebase-admin/app';
-import { getDatabase }          from 'firebase-admin/database';
-import { getMessaging }         from 'firebase-admin/messaging';
+import { getDatabase } from 'firebase-admin/database';
+import { getMessaging } from 'firebase-admin/messaging';
 
-// 1️⃣ bootstrap Admin SDK (credentials come from GH secrets)
-const sa = JSON.parse(
-  Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT, 'base64').toString('utf8')
-);
+const keyEnv = process.env.FIREBASE_SERVICE_ACCOUNT.trim();
+const sa = keyEnv.startsWith('{')           // ← sniff: looks like raw JSON?
+  ? JSON.parse(keyEnv)                      // yes → parse directly
+  : JSON.parse(Buffer.from(keyEnv, 'base64').toString('utf8')); // else assume b64
+
 initializeApp({
   credential: cert(sa),
   databaseURL: process.env.DATABASE_URL,
